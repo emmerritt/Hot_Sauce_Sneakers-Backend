@@ -28,7 +28,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// const apiRouter = require('./api');
 import router from './api/index.js'
 app.use('/api', router);
 
