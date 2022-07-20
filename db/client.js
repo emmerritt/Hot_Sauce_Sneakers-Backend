@@ -5,4 +5,4 @@ const connectionString = process.env.DATABASE_URL || 'https://localhost:5432/hot
 
 const client = new Client(connectionString);
 
-export default client;
+export { client };

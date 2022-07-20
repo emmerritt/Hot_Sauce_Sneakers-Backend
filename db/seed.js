@@ -1,6 +1,19 @@
-import client from './client.js';
+import { client } from './index.js';
+import { 
+    createUser,
+    createBrand,
+    createSize,
+    createProduct,
+    createInventoryItem,
+    createCartItem,
+    createOrder,
+    createOrderHistoryItem,
+    getAllProductsInStock
+ } from './index.js'
 
-async function dropTables() {
+ import { testBrands, testProducts, testSizes, testInventory } from './test_data.js'
+
+const dropTables = async () => {
     try {
         console.log("Starting to drop tables...");
 
@@ -22,7 +35,7 @@ async function dropTables() {
     }
 }
 
-async function createTables() {
+const createTables = async () => {
     try {
         console.log("Starting to build tables...");
     
@@ -53,11 +66,11 @@ async function createTables() {
           );
           CREATE TABLE users (
             id SERIAL PRIMARY KEY,
-            username VARCHAR(255) UNIQUE NOT NULL,
+            username VARCHAR(255),
             password TEXT NOT NULL,
             email TEXT UNIQUE NOT NULL,
-            "isAdmin" BOOLEAN,
-            "isActive" BOOLEAN
+            "isAdmin" BOOLEAN DEFAULT false,
+            "isActive" BOOLEAN DEFAULT true
           );
           CREATE TABLE orders (
             id SERIAL PRIMARY KEY,
@@ -86,17 +99,51 @@ async function createTables() {
     }
 }
 
-async function rebuildDB() {
+const rebuildDB = async () => {
     try {
       client.connect();
   
       await dropTables();
       await createTables();
+
     } catch (error) {
       throw error;
     }
 }
 
+const testDB = async () => {
+    const testUser = {
+        username: 'testuser',
+        password: 'testpassword',
+        email: 'test@email.com'
+    }
+
+    const newUser = await createUser(testUser)
+    console.log("New user: ")
+    console.log(newUser)
+
+    const seededBrands = await Promise.all(testBrands.map(createBrand))
+    const seededProducts = await Promise.all(testProducts.map(createProduct))
+    const seededSizes = await Promise.all(testSizes.map(createSize))
+    const seededInventory = await Promise.all(testInventory.map(createInventoryItem))
+
+    // Additional Seeding to Use for Testing Purposes
+
+    // const seededCartItem = await createCartItem({userId:1, count:1, inventoryId:1})
+    // console.log("seededCartItem")
+    // console.log(seededCartItem)
+
+    // const seededOrder = await createOrder({userId:1})
+    // console.log("seededOrder")
+    // console.log(seededOrder)
+
+    // const seededOrderHistoryItem = await createOrderHistoryItem({orderId:1, count:1, inventoryId:1})
+    // console.log("seededOrderHistoryItem")
+    // console.log(seededOrderHistoryItem)
+
+}
+
 rebuildDB()
-  .catch(console.error)
-  .finally(() => client.end());
+    .then(testDB)
+    .catch(console.error)
+    .finally(() => client.end());
