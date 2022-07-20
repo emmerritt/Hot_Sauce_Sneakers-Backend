@@ -14,6 +14,17 @@ const createSize = async ({size, gender}) => {
     }
 }
 
+const getAllSizes = async () => {
+    try {
+        const { rows: sizes } = await client.query(`
+          SELECT * FROM sizes;
+        `);
+        return sizes;
+      } catch (error) {
+        throw error;
+      }
+}
+
 const getSizeById = async (id) => {
     try {
         const { rows: response } = await client.query(`
@@ -28,5 +39,6 @@ const getSizeById = async (id) => {
 
 export { 
     createSize,
+    getAllSizes,
     getSizeById
  }
