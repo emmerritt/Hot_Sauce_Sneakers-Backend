@@ -14,6 +14,31 @@ const createBrand = async ({name}) => {
     }
 }
 
+const getAllBrands = async () => {
+    try {
+        const { rows: brands } = await client.query(`
+          SELECT * FROM brands;
+        `);
+        return brands;
+      } catch (error) {
+        throw error;
+      }
+}
+
+const getBrandByBrandId = async (id) => {
+    try {
+        const { rows: [brand] } = await client.query(`
+          SELECT * FROM brands
+          WHERE id=$1;
+        `, [id]);
+        return brand;
+      } catch (error) {
+        throw error;
+      }
+}
+
 export { 
-    createBrand
+    createBrand,
+    getAllBrands,
+    getBrandByBrandId
 }

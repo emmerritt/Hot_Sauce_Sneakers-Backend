@@ -8,7 +8,16 @@ import {
     createCartItem,
     createOrder,
     createOrderHistoryItem,
-    getAllProductsInStock
+    getAllInventoryItemsInStock,
+    getAllProductsInStock,
+    getProductById,
+    getAllSizesInStockByProductId,
+    getAllSizesByProductId,
+    updateStockByProductIdAndSize,
+    getStockByProductIdAndSize,
+    getAllSizes,
+    getAllBrands,
+    getBrandByBrandId 
  } from './index.js'
 
  import { testBrands, testProducts, testSizes, testInventory } from './test_data.js'
@@ -126,20 +135,6 @@ const testDB = async () => {
     const seededProducts = await Promise.all(testProducts.map(createProduct))
     const seededSizes = await Promise.all(testSizes.map(createSize))
     const seededInventory = await Promise.all(testInventory.map(createInventoryItem))
-
-    // Additional Seeding to Use for Testing Purposes
-
-    // const seededCartItem = await createCartItem({userId:1, count:1, inventoryId:1})
-    // console.log("seededCartItem")
-    // console.log(seededCartItem)
-
-    // const seededOrder = await createOrder({userId:1})
-    // console.log("seededOrder")
-    // console.log(seededOrder)
-
-    // const seededOrderHistoryItem = await createOrderHistoryItem({orderId:1, count:1, inventoryId:1})
-    // console.log("seededOrderHistoryItem")
-    // console.log(seededOrderHistoryItem)
 
 }
 
