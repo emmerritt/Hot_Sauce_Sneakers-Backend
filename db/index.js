@@ -46,4 +46,9 @@ export {
 
 export { createOrderHistoryItem } from './order_histories.js';
 
-export { createCartItem } from './carts.js';
+export { 
+    createCartItem,
+    getCartItemsByUserId,
+    updateCartItemCount,
+    removeCartItem 
+} from './carts.js';

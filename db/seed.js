@@ -27,7 +27,10 @@ import {
     getAllProductsInStockByBrand,
     upgradeUserToAdmin,
     deactivateUser,
-    verifyPassword 
+    verifyPassword,
+    getCartItemsByUserId,
+    updateCartItemCount,
+    removeCartItem 
  } from './index.js'
 
  import { testBrands, testProducts, testSizes, testInventory } from './test_data.js'
@@ -144,8 +147,8 @@ const testDB = async () => {
     const seededProducts = await Promise.all(testProducts.map(createProduct))
     const seededSizes = await Promise.all(testSizes.map(createSize))
     const seededInventory = await Promise.all(testInventory.map(createInventoryItem))
-    
-
+    const seededCart = await createCartItem({userId: 1, inventoryId: 5, count: 3})
+    const seededCart2 = await createCartItem({userId: 1, inventoryId: 6, count: 1})
 }
 
 rebuildDB()
