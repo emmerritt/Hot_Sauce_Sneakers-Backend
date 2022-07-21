@@ -11,10 +11,13 @@ export {
 export { 
     createInventoryItem,
     getAllInventoryItemsInStock,
-    getAllSizesByProductId,
+    getInventoryItemsByProductId,
     getAllSizesInStockByProductId,
+    getAllSizesByProductId,
     updateStockByProductIdAndSize,
-    getStockByProductIdAndSize
+    getStockByProductIdAndSize,
+    getInventoryItemById,
+    deleteInventoryItemById
 } from './inventories.js';
 
 export { createOrder } from './orders.js';

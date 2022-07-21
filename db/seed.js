@@ -17,7 +17,9 @@ import {
     getStockByProductIdAndSize,
     getAllSizes,
     getAllBrands,
-    getBrandByBrandId 
+    getBrandByBrandId,
+    deleteInventoryItemById,
+    getInventoryItemById 
  } from './index.js'
 
  import { testBrands, testProducts, testSizes, testInventory } from './test_data.js'
