@@ -1,6 +1,11 @@
 export { client } from './client.js';
 
-export { createUser } from './users.js';
+export { 
+    createUser,
+    upgradeUserToAdmin,
+    deactivateUser,
+    verifyPassword
+ } from './users.js';
 
 export { 
     createBrand,
