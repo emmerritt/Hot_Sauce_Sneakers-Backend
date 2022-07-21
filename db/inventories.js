@@ -131,9 +131,9 @@ const getInventoryItemById = async (id) => {
 
 const deleteInventoryItemById = async (id) => {
 
-    const deletedInventoryItem = await getInventoryItemById(id)
-
     try {
+        const deletedInventoryItem = await getInventoryItemById(id)
+        
         await client.query(`
             DELETE FROM order_histories
             WHERE "inventoryId"=$1;
