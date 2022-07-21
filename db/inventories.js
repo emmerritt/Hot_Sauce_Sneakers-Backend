@@ -17,7 +17,7 @@ const createInventoryItem = async ({productId, sizeId, stock}) => {
 const getAllInventoryItemsInStock = async () => {
     try {
         const { rows: products } = await client.query(`
-          SELECT inventories.*, products.name, products.price, products.image, sizes.gender, sizes.size, brands.name AS "brandName" FROM inventories
+          SELECT inventories.*, products.name, products.price, products.image, sizes.gender, sizes.size, brands.name AS "brand" FROM inventories
           JOIN sizes ON inventories."sizeId"=sizes.id
           JOIN products ON inventories."productId"=products.id
           JOIN brands ON products."brandId"=brands.id
@@ -29,17 +29,29 @@ const getAllInventoryItemsInStock = async () => {
       }
 }
 
-const getAllSizesByProductId = async (id) => {
+const getInventoryItemsByProductId = async (productId) => {
+    try {
+        const { rows: products } = await client.query(`
+          SELECT * FROM inventories
+            WHERE inventories."productId"=$1;
+        `, [productId]);
+        return products;
+      } catch (error) {
+        throw error;
+      }
+}
+
+const getAllSizesByProductId = async (productId) => {
     try {
         const { rows: sizes } = await client.query(`
           SELECT inventories."sizeId", sizes.gender, sizes.size FROM inventories
           JOIN sizes
           ON sizes.id=inventories."sizeId"
           WHERE inventories."productId"=$1;
-        `, [id]);
+        `, [productId]);
 
         const response = {
-            productId: id,
+            productId,
             sizes
         }
 
@@ -49,17 +61,17 @@ const getAllSizesByProductId = async (id) => {
       }
 }
 
-const getAllSizesInStockByProductId = async (id) => {
+const getAllSizesInStockByProductId = async (productId) => {
     try {
         const { rows: sizes } = await client.query(`
           SELECT inventories."sizeId", sizes.gender, sizes.size FROM inventories
           JOIN sizes
           ON sizes.id=inventories."sizeId"
           WHERE inventories."productId"=$1 AND inventories.stock>0;
-        `, [id]);
+        `, [productId]);
 
         const response = {
-            productId: id,
+            productId,
             sizes
         }
 
@@ -102,11 +114,53 @@ const updateStockByProductIdAndSize = async ({productId, sizeId, count}) => {
       }
 }
 
+const getInventoryItemById = async (id) => {
+    try {
+        const { rows: products } = await client.query(`
+          SELECT inventories.*, products.name, products.price, products.image, sizes.gender, sizes.size, brands.name AS "brand" FROM inventories
+          JOIN sizes ON inventories."sizeId"=sizes.id
+          JOIN products ON inventories."productId"=products.id
+          JOIN brands ON products."brandId"=brands.id
+          WHERE inventories."id"=$1;
+        `, [id]);
+        return products;
+      } catch (error) {
+        throw error;
+      }
+}
+
+const deleteInventoryItemById = async (id) => {
+
+    const deletedInventoryItem = await getInventoryItemById(id)
+
+    try {
+        await client.query(`
+            DELETE FROM order_histories
+            WHERE "inventoryId"=$1;
+        `, [id]);
+        await client.query(`
+            DELETE FROM carts
+            WHERE "inventoryId"=$1;
+        `, [id]);
+        await client.query(`
+            DELETE FROM inventories
+            WHERE "id"=$1;
+        `, [id]);
+
+        return deletedInventoryItem;
+      } catch (error) {
+        throw error;
+      }
+}
+
 export { 
     createInventoryItem,
     getAllInventoryItemsInStock,
+    getInventoryItemsByProductId,
     getAllSizesInStockByProductId,
     getAllSizesByProductId,
     updateStockByProductIdAndSize,
-    getStockByProductIdAndSize
+    getStockByProductIdAndSize,
+    getInventoryItemById,
+    deleteInventoryItemById
  }

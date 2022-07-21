@@ -1,4 +1,9 @@
-import { client } from './index.js';
+import { 
+    client,
+    getAllSizesInStockByProductId,
+    getInventoryItemsByProductId,
+    deleteInventoryItemById
+ } from './index.js';
 
 const createProduct = async ({name, brandId, price, image}) => {
     try {
@@ -39,6 +44,11 @@ const getProductById = async (id) => {
           ON brands.id=products."brandId"
           WHERE products.id=$1;
         `, [id]);
+
+        const { sizes } = await getAllSizesInStockByProductId(id);
+
+        product.sizes = sizes;
+
         return product;
       } catch (error) {
         throw error;
