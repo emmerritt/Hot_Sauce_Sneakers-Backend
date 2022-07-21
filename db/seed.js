@@ -19,7 +19,12 @@ import {
     getAllBrands,
     getBrandByBrandId,
     deleteInventoryItemById,
-    getInventoryItemById 
+    getInventoryItemById,
+    getAllProducts,
+    updateProduct,
+    deleteProduct,
+    getAllProductsInStockBySize,
+    getAllProductsInStockByBrand 
  } from './index.js'
 
  import { testBrands, testProducts, testSizes, testInventory } from './test_data.js'
@@ -137,6 +142,8 @@ const testDB = async () => {
     const seededProducts = await Promise.all(testProducts.map(createProduct))
     const seededSizes = await Promise.all(testSizes.map(createSize))
     const seededInventory = await Promise.all(testInventory.map(createInventoryItem))
+
+    
 
 }
 

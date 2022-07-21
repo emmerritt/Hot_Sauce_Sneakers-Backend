@@ -32,6 +32,11 @@ export {
     createProduct,
     getAllProductsInStock,
     getProductById, 
+    getAllProducts,
+    updateProduct,
+    deleteProduct,
+    getAllProductsInStockBySize,
+    getAllProductsInStockByBrand
 } from './products.js';
 
 export { createOrderHistoryItem } from './order_histories.js';
