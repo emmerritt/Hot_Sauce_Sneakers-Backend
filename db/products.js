@@ -97,6 +97,7 @@ const getProductById = async (id) => {
         const { sizes } = await getAllSizesInStockByProductId(id);
 
         product.sizes = sizes;
+        console.log(product)
 
         return product;
       } catch (error) {
