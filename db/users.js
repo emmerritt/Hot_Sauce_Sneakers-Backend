@@ -43,6 +43,26 @@ const getUserByEmail = async ({ email }) => {
   }
 };
 
+const getUserById = async ({ id }) => {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+          SELECT * FROM users
+          WHERE id=$1;
+        `,
+      [id]
+    );
+
+    delete user.password
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 async function verifyPassword({ email, password }) {
   const user = await getUserByEmail({ email });
   const { password: hash } = user;
@@ -96,4 +116,5 @@ export {
   upgradeUserToAdmin,
   deactivateUser,
   verifyPassword,
+  getUserById
 };

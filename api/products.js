@@ -25,6 +25,7 @@ productRouter.get('/admin', async(req, res, next) => {
 
 // get all products in stock
 productRouter.get('/', async(req, res, next) => {
+
     try {
         const productsInStock = await getAllProductsInStock()
         console.log(productsInStock)
