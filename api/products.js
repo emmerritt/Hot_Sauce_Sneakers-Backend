@@ -37,10 +37,12 @@ productRouter.get('/', async(req, res, next) => {
 })
 
 // get product by id
-productRouter.get('/singleproduct', async(req, res, next) => {
-    try {
-        const product = await getProductById()
+productRouter.get('/:productId', async(req, res, next) => {
+    const { productId } = req.params
 
+    try {
+        const product = await getProductById(productId)
+    
         res.send(product)
         
     } catch (error) {
@@ -61,9 +63,10 @@ productRouter.post('/', async(req, res, next) => {
 
 // update product
 productRouter.patch('/:productId', async(req, res, next) => {
+    const { productId } = req.params;
     const { name, price, image, brandId } = req.body
     try { 
-        const productToUpdate = await updateProduct({ name, price, image, brandId })
+        const productToUpdate = await updateProduct({ id: productId, name, price, image, brandId })
         res.send(productToUpdate)
     } catch (error) {
         next(error)
