@@ -54,7 +54,7 @@ productRouter.get('/:productId', async(req, res, next) => {
 productRouter.post('/', async(req, res, next) => {
     const { name, price, image, brandId } = req.body
     try { 
-        const newProduct = await createProduct({ name, price, image, brandId })
+        const newProduct = await createProduct({ name, brandId, price, image })
         res.send(newProduct)
     } catch (error) {
         next(error)
@@ -84,4 +84,4 @@ productRouter.delete("/:productId", async (req, res, next) => {
     }
   })
 
-  export { productRouter }
+export { productRouter }

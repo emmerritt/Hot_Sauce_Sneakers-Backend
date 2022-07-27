@@ -307,9 +307,57 @@ const testInventory = [
     }
 ]
 
+const testUsers = [
+    {
+        username: 'Jacob User',
+        password: 'testuser',
+        email: 'jacob@user.com'
+    },
+    {
+        username: 'Junwei User',
+        password: 'testuser',
+        email: 'junwei@user.com'
+    },
+    {
+        username: 'Alexis User',
+        password: 'testuser',
+        email: 'alexis@user.com'
+    },
+    {
+        username: 'Emily User',
+        password: 'testuser',
+        email: 'emily@user.com'
+    }
+]
+
+const testAdmins = [
+    {
+        username: 'Emily Admin',
+        password: 'testadmin',
+        email: 'emily@admin.com'
+    },
+    {
+        username: 'Alexis Admin',
+        password: 'testadmin',
+        email: 'alexis@admin.com'
+    },
+    {
+        username: 'Junwei Admin',
+        password: 'testadmin',
+        email: 'junwei@admin.com'
+    },
+    {
+        username: 'Jacob Admin',
+        password: 'testadmin',
+        email: 'jacob@admin.com'
+    }
+]
+
 export {
     testProducts,
     testBrands,
     testSizes,
-    testInventory
+    testInventory,
+    testUsers,
+    testAdmins
 }

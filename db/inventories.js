@@ -96,22 +96,22 @@ const getStockByProductIdAndSize = async ({productId, sizeId}) => {
 
 const updateStockByProductIdAndSize = async ({productId, sizeId, count}) => {
 
-    const {stock} = await getStockByProductIdAndSize({productId, sizeId});
+    const { stock } = await getStockByProductIdAndSize({productId, sizeId});
     const updatedStock = await stock - count;
 
     try {
-        const { rows: [product] } = await client.query(`
-            UPDATE inventories
-            SET stock=$1
-            WHERE inventories."productId"=$2 AND inventories."sizeId"=$3;
-        `, [updatedStock, productId, sizeId]);
+      const { rows: [product] } = await client.query(`
+          UPDATE inventories
+          SET stock=$1
+          WHERE inventories."productId"=$2 AND inventories."sizeId"=$3;
+      `, [updatedStock, productId, sizeId]);
 
-        const updatedInventoryItem = await getStockByProductIdAndSize({productId, sizeId});
+      const updatedInventoryItem = await getStockByProductIdAndSize({productId, sizeId});
 
-        return updatedInventoryItem;
-      } catch (error) {
-        throw error;
-      }
+      return updatedInventoryItem;
+    } catch (error) {
+      throw error;
+    }
 }
 
 const getInventoryItemById = async (id) => {

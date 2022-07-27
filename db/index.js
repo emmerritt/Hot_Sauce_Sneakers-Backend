@@ -5,7 +5,8 @@ export {
     upgradeUserToAdmin,
     deactivateUser,
     verifyPassword,
-    getUserById
+    getUserById,
+    getAllUsers
  } from './users.js';
 
 export { 
