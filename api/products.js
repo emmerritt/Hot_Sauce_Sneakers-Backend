@@ -51,9 +51,15 @@ productRouter.get('/:productId', async(req, res, next) => {
 
 // create new product
 productRouter.post('/', async(req, res, next) => {
-    const { name, price, image, brandId } = req.body
+    const { name, brandId, price, image } = req.body
+    const productData = {
+        name,
+        brandId,
+        price,
+        image
+    }
     try { 
-        const newProduct = await createProduct({ name, price, image, brandId })
+        const newProduct = await createProduct(productData)
         res.send(newProduct)
     } catch (error) {
         next(error)
