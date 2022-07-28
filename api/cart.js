@@ -48,4 +48,48 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+// PATCH /api/cart
+router.patch('/', async (req, res, next) => {
+    const { inventoryId, count } = req.body;
+
+    try {
+        if(req.user) {
+            const cart = await updateCartItemCount({userId: req.user.id, inventoryId, count});
+            res.send(cart);
+        }
+        else {
+            next({
+                error: 'Unauthorized Error',
+                name: 'Unauthorized Error',
+                message: 'You must be logged in to perform this action!'
+            })
+        }
+    }
+    catch({error, name, message}) {
+        next({error, name, message});
+    }
+});
+
+// DELETE /api/cart
+router.delete('/', async (req, res, next) => {
+    const { inventoryId } = req.body;
+
+    try {
+        if(req.user) {
+            const cart = await removeCartItem({userId: req.user.id, inventoryId});
+            res.send(cart);
+        }
+        else {
+            next({
+                error: 'Unauthorized Error',
+                name: 'Unauthorized Error',
+                message: 'You must be logged in to perform this action!'
+            })
+        }
+    }
+    catch({error, name, message}) {
+        next({error, name, message});
+    }
+});
+
 export default router;
