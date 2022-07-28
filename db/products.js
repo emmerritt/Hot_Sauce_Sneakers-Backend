@@ -5,7 +5,7 @@ import {
     deleteInventoryItemById
  } from './index.js';
 
-const createProduct = async ({name, brandId, price, image}) => {
+const createProduct = async ({ name, brandId, price, image }) => {
     try {
       const { rows: response } = await client.query(`
         INSERT INTO products(name, "brandId", price, image)
