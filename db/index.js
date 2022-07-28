@@ -33,7 +33,8 @@ export { createOrder } from './orders.js';
 export { 
     createSize,
     getAllSizes,
-    getSizeById
+    getSizeById,
+    deleteSize
 } from './sizes.js';
 
 export { 

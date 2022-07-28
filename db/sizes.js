@@ -37,8 +37,22 @@ const getSizeById = async (id) => {
       }
 }
 
+const deleteSize = async (id) => {
+  try {
+    const deletedSize = await getSizeById(id);
+    await client.query(`
+      DELETE FROM sizes
+      WHERE id=$1;
+    `, [id]);
+    return deletedSize;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export { 
     createSize,
     getAllSizes,
-    getSizeById
+    getSizeById,
+    deleteSize
  }

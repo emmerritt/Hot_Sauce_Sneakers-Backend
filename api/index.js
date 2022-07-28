@@ -10,6 +10,7 @@ import { productRouter } from './products.js'
 import { inventoryRouter } from "./inventory.js";
 import { adminRouter } from './admin.js';
 import { brandsRouter } from './brands.js';
+import { sizesRouter } from "./sizes.js";
 import { getUserById } from '../db/index.js';
 
 
@@ -51,6 +52,8 @@ router.use('/products', productRouter);
 router.use('/inventory', inventoryRouter);
 // /api/brands
 router.use('/brands', brandsRouter)
+// /api/sizes
+router.use('/sizes', sizesRouter)
 // /api/admin
 router.use('/admin', adminRouter)
 

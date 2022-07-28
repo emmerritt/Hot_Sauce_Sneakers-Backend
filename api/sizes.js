@@ -1,26 +1,26 @@
 import express from "express";
-const brandsRouter = express.Router();
+const sizesRouter = express.Router();
 import { 
-    getAllBrands,
-    createBrand,
-    deleteBrand
+    getAllSizes,
+    createSize,
+    deleteSize
 } from '../db/index.js'
 
-// Get all brands
-brandsRouter.get('/', async (req, res, next) => {
+// Get all sizes
+sizesRouter.get('/', async (req, res, next) => {
 
     try {
-        const allBrands = await getAllBrands()
+        const allSizes = await getAllSizes()
 
-        res.send(allBrands)
+        res.send(allSizes)
     } catch ({error, message}) {
         next ({error, message})
     }
 })
 
-// Create a new brand
-brandsRouter.post('/', async (req, res, next) => {
-    const { name } = req.body
+// Create a new size
+sizesRouter.post('/', async (req, res, next) => {
+    const { size, gender } = req.body
     const user = req.user
     
     if (!user || !user.isAdmin) {
@@ -31,16 +31,16 @@ brandsRouter.post('/', async (req, res, next) => {
     }
 
     try {
-        const newBrand = await createBrand({name})
+        const newSize = await createSize({size, gender})
 
-        res.send(newBrand)
+        res.send(newSize)
     } catch ({error, message}) {
         next ({error, message})
     }
 })
 
-// Delete a brand by brandId
-brandsRouter.delete('/:id', async (req, res, next) => {
+// Delete a size by sizeId
+sizesRouter.delete('/:id', async (req, res, next) => {
     const { id } = req.params
     const user = req.user
     
@@ -52,12 +52,12 @@ brandsRouter.delete('/:id', async (req, res, next) => {
     }
 
     try {
-        const deletedBrand = await deleteBrand(id)
+        const deletedSize = await deleteSize(id)
 
-        res.send(deletedBrand)
+        res.send(deletedSize)
     } catch ({error, message}) {
         next ({error, message})
     }
 })
 
-export { brandsRouter }
+export { sizesRouter }
