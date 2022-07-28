@@ -8,8 +8,9 @@ const router = express.Router();
 import usersRoutes from "./users.js";
 import { productRouter } from './products.js'
 import { inventoryRouter } from "./inventory.js";
-import { adminRouter } from './admin.js'
-import { getUserById } from '../db/index.js'
+import { adminRouter } from './admin.js';
+import { brandsRouter } from './brands.js';
+import { getUserById } from '../db/index.js';
 
 
 // Authorize and attach current user to request
@@ -47,7 +48,9 @@ router.use('/users', usersRoutes);
 // /api/products
 router.use('/products', productRouter);
 // /api/inventory
-router.use('/inventory', inventoryRouter)
+router.use('/inventory', inventoryRouter);
+// /api/brands
+router.use('/brands', brandsRouter)
 // /api/admin
 router.use('/admin', adminRouter)
 

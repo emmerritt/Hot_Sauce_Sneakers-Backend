@@ -37,8 +37,22 @@ const getBrandByBrandId = async (id) => {
       }
 }
 
+const deleteBrand = async (id) => {
+  try {
+    const deletedBrand = await getBrandByBrandId(id);
+    await client.query(`
+      DELETE FROM brands
+      WHERE id=$1;
+    `, [id]);
+    return deletedBrand;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export { 
     createBrand,
     getAllBrands,
-    getBrandByBrandId
+    getBrandByBrandId,
+    deleteBrand
 }

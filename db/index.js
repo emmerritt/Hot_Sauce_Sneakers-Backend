@@ -12,7 +12,8 @@ export {
 export { 
     createBrand,
     getAllBrands,
-    getBrandByBrandId 
+    getBrandByBrandId,
+    deleteBrand 
 } from './brands.js';
 
 export { 
