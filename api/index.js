@@ -8,6 +8,7 @@ const router = express.Router();
 import usersRoutes from "./users.js";
 import { productRouter } from './products.js'
 import { getUserById } from '../db/index.js'
+import cartRouter from './cart.js'
 
 
 // Authorize and attach current user to request
@@ -45,6 +46,8 @@ router.use(async (req, res, next) => {
 router.use('/users', usersRoutes);
 // /api/products
 router.use('/products', productRouter);
+// /api/cart
+router.use('/cart', cartRouter);
 
 
 // Server health check
