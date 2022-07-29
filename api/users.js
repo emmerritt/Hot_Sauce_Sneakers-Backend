@@ -4,7 +4,12 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 const { JWT_SECRET } = process.env;
-import { getUserByEmail, createUser, verifyPassword } from "../db/users.js";
+import {
+  getUserByEmail,
+  createUser,
+  verifyPassword,
+  getUserByUsername,
+} from "../db/users.js";
 import { getUserOrderHistory } from "../db/order_histories.js";
 import { getCartItemsByUserId } from "../db/carts.js";
 
@@ -87,9 +92,9 @@ router.get("/:username/orderhistory", async (req, res, next) => {
 router.get("/:username/cart", async (req, res, next) => {
   try {
     console.log("username: ", req.params.username);
-    // getUserDetailsByUsernme
+    const userDetails = await getUserByUsername(req.params.username);
     // const history = [];
-    const cartItems = await getCartItemsByUserId(50);
+    const cartItems = await getCartItemsByUserId(userDetails.id);
     res.send({ message: "Cart items fetched successful!", data: cartItems });
   } catch (error) {
     console.log(error);

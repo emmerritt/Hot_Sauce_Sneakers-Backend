@@ -31,10 +31,10 @@ const getUserOrderHistory = async ({ username }) => {
         ON( "order_histories"."orderId" = orders.id )
                                 INNER JOIN users
         ON( "orders"."userId" = users.id )
-        WHERE users.email = 'test@gmail.com';
+        WHERE users.username = $1;
       `;
     console.log(sql);
-    const { rows: response } = await client.query(sql);
+    const { rows: response } = await client.query(sql, [username]);
 
     return response;
   } catch (error) {
