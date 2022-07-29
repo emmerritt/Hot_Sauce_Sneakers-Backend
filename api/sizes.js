@@ -3,7 +3,8 @@ const sizesRouter = express.Router();
 import { 
     getAllSizes,
     createSize,
-    deleteSize
+    deleteSize,
+    getAllSizesInStockByProductId
 } from '../db/index.js'
 
 // Get all sizes
@@ -13,6 +14,19 @@ sizesRouter.get('/', async (req, res, next) => {
         const allSizes = await getAllSizes()
 
         res.send(allSizes)
+    } catch ({error, message}) {
+        next ({error, message})
+    }
+})
+
+// Get all sizes of a product
+sizesRouter.get('/:productId', async (req, res, next) => {
+    const { productId } = req.params;
+
+    try {
+        const allSizesOfProduct = await getAllSizesInStockByProductId(productId);
+
+        res.send(allSizesOfProduct);
     } catch ({error, message}) {
         next ({error, message})
     }
