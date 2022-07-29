@@ -12,6 +12,8 @@ import { adminRouter } from './admin.js';
 import { brandsRouter } from './brands.js';
 import { sizesRouter } from "./sizes.js";
 import { getUserById } from '../db/index.js';
+import cartRouter from './cart.js'
+
 
 
 // Authorize and attach current user to request
@@ -56,6 +58,8 @@ router.use('/brands', brandsRouter)
 router.use('/sizes', sizesRouter)
 // /api/admin
 router.use('/admin', adminRouter)
+// /api/cart
+router.use('/cart', cartRouter);
 
 
 // Server health check
