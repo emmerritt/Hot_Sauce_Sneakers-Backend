@@ -5,13 +5,15 @@ export {
     upgradeUserToAdmin,
     deactivateUser,
     verifyPassword,
-    getUserById
+    getUserById,
+    getAllUsers
  } from './users.js';
 
 export { 
     createBrand,
     getAllBrands,
-    getBrandByBrandId 
+    getBrandByBrandId,
+    deleteBrand 
 } from './brands.js';
 
 export { 
@@ -31,7 +33,8 @@ export { createOrder } from './orders.js';
 export { 
     createSize,
     getAllSizes,
-    getSizeById
+    getSizeById,
+    deleteSize
 } from './sizes.js';
 
 export { 

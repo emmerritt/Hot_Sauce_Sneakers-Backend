@@ -90,4 +90,4 @@ productRouter.delete("/:productId", async (req, res, next) => {
     }
   })
 
-  export { productRouter }
+export { productRouter }

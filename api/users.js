@@ -20,8 +20,9 @@ router.post("/register", async (req, res, next) => {
     });
 
     res.status(200).json({ message: "Signup successful!" });
-  } catch (error) {
+  } catch ({error, message}) {
     res.status(500).json({ message: "Something went wrong." });
+    next ({error, message})
   }
 });
 
@@ -32,7 +33,6 @@ router.post("/login", async (req, res, next) => {
   if (!email || !password) {
     next({
         error: "Missing email or password for login",
-        name: "MissingCredentialsError",
         message: "Please submit both an email and password to login."
     });
   }
@@ -43,7 +43,6 @@ router.post("/login", async (req, res, next) => {
     if (!user) {
         next({
             error: 'Invalid Login Credentials',
-            name: 'InvalidLoginError',
             message: 'Username and password do not match. Please try check the password and try again.'
         })
     }
@@ -65,8 +64,8 @@ router.post("/login", async (req, res, next) => {
         user: user
     })
 
-  } catch ({error, name, message}) {
-      next ({error, name, message})
+  } catch ({error, message}) {
+      next ({error, message})
   }
 })
 
