@@ -16,13 +16,12 @@ router.get('/', async (req, res, next) => {
         else {
             next({
                 error: 'Unauthorized Error',
-                name: 'Unauthorized Error',
                 message: 'You must be logged in to perform this action!'
             })
         }
     }
-    catch({error, name, message}) {
-        next({error, name, message});
+    catch({error, message}) {
+        next({error, message});
     }
 });
 
@@ -38,13 +37,12 @@ router.post('/', async (req, res, next) => {
         else {
             next({
                 error: 'Unauthorized Error',
-                name: 'Unauthorized Error',
                 message: 'You must be logged in to perform this action!'
             })
         }
     }
-    catch({error, name, message}) {
-        next({error, name, message});
+    catch({error, message}) {
+        next({error, message});
     }
 });
 
@@ -60,13 +58,12 @@ router.patch('/', async (req, res, next) => {
         else {
             next({
                 error: 'Unauthorized Error',
-                name: 'Unauthorized Error',
                 message: 'You must be logged in to perform this action!'
             })
         }
     }
-    catch({error, name, message}) {
-        next({error, name, message});
+    catch({error, message}) {
+        next({error, message});
     }
 });
 
@@ -82,13 +79,12 @@ router.delete('/', async (req, res, next) => {
         else {
             next({
                 error: 'Unauthorized Error',
-                name: 'Unauthorized Error',
                 message: 'You must be logged in to perform this action!'
             })
         }
     }
-    catch({error, name, message}) {
-        next({error, name, message});
+    catch({error, message}) {
+        next({error, message});
     }
 });
 
