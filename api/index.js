@@ -7,7 +7,13 @@ const router = express.Router();
 
 import usersRoutes from "./users.js";
 import { productRouter } from './products.js'
-import { getUserById } from '../db/index.js'
+import { inventoryRouter } from "./inventory.js";
+import { adminRouter } from './admin.js';
+import { brandsRouter } from './brands.js';
+import { sizesRouter } from "./sizes.js";
+import { getUserById } from '../db/index.js';
+import cartRouter from './cart.js'
+
 
 
 // Authorize and attach current user to request
@@ -27,13 +33,12 @@ router.use(async (req, res, next) => {
                 req.user = await getUserById(userDetails);
                 next();
             }
-        } catch ({ error, name, message }) {
-            next({ error, name, message });
+        } catch ({ error, message }) {
+            next({ error, message });
         }
     } else {
         next({
             error: 'Malformed Authorization Header',
-            name: 'AuthorizationError',
             message: `Authorization token must start with ${ prefix }`
         });
     }
@@ -45,6 +50,16 @@ router.use(async (req, res, next) => {
 router.use('/users', usersRoutes);
 // /api/products
 router.use('/products', productRouter);
+// /api/inventory
+router.use('/inventory', inventoryRouter);
+// /api/brands
+router.use('/brands', brandsRouter)
+// /api/sizes
+router.use('/sizes', sizesRouter)
+// /api/admin
+router.use('/admin', adminRouter)
+// /api/cart
+router.use('/cart', cartRouter);
 
 
 // Server health check
@@ -65,7 +80,6 @@ router.use((req, res, next) => {
 router.use((error, req, res, next) => {
     res.send({
         error: error.error,
-        name: error.name,
         message: error.message
     });
 });

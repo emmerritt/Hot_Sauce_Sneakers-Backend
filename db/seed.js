@@ -33,7 +33,7 @@ import {
     removeCartItem 
  } from './index.js'
 
- import { testBrands, testProducts, testSizes, testInventory } from './test_data.js'
+ import { testBrands, testProducts, testSizes, testInventory, testAdmins, testUsers } from './test_data.js'
 
 const dropTables = async () => {
     try {
@@ -143,6 +143,9 @@ const testDB = async () => {
     console.log("New user: ")
     console.log(newUser)
 
+    const seededUsers = await Promise.all(testUsers.map(createUser))
+    const seededAdmins = await Promise.all(testAdmins.map(createUser))
+    const seededAdminsUpgraded = await Promise.all(seededAdmins.map(upgradeUserToAdmin))
     const seededBrands = await Promise.all(testBrands.map(createBrand))
     const seededProducts = await Promise.all(testProducts.map(createProduct))
     const seededSizes = await Promise.all(testSizes.map(createSize))

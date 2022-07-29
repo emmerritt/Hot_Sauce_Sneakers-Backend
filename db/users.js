@@ -103,7 +103,9 @@ const upgradeUserToAdmin = async ({ email }) => {
       [email]
     );
 
-    const newAdminUser = getUserByEmail({ email });
+    const newAdminUser = await getUserByEmail({ email });
+    delete newAdminUser.password;
+
     return newAdminUser;
   } catch (error) {
     throw error;
@@ -121,8 +123,25 @@ const deactivateUser = async ({ email }) => {
       [email]
     );
 
-    const deactivatedUser = getUserByEmail({ email });
+    const deactivatedUser = await getUserByEmail({ email });
+    delete deactivatedUser.password;
+
     return deactivatedUser;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getAllUsers = async () => {
+  try {
+    const { rows: allUsers } = await client.query(
+      `
+        SELECT id, username, email, "isAdmin", "isActive"
+        FROM users;
+        `
+    );
+
+    return allUsers;
   } catch (error) {
     throw error;
   }
@@ -136,4 +155,5 @@ export {
   deactivateUser,
   verifyPassword,
   getUserById,
+  getAllUsers,
 };
