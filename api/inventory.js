@@ -7,10 +7,8 @@ import {
 } from '../db/index.js'
 
 // Get current stock for inventory item
-// Body requires sizeId
-inventoryRouter.get('/:productId', async (req, res, next) => {
-    const { productId } = req.params;
-    const { sizeId } = req.body;
+inventoryRouter.get('/:productId/:sizeId', async (req, res, next) => {
+    const { productId, sizeId } = req.params;
 
     try {
         const inventoryItem = await getStockByProductIdAndSize({productId, sizeId})
