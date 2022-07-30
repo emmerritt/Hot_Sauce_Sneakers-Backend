@@ -88,7 +88,7 @@ const getAllProductsInStockByBrand = async (brandId) => {
 const getProductById = async (id) => {
     try {
         const { rows: [product] } = await client.query(`
-          SELECT *, brands.name AS "brand" FROM products
+          SELECT products.*, brands.name AS "brand" FROM products
           JOIN brands
           ON brands.id=products."brandId"
           WHERE products.id=$1;
