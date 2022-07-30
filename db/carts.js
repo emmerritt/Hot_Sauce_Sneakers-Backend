@@ -57,23 +57,39 @@ const updateCartItemCount = async ({userId, inventoryId, count}) => {
 }
 
 const removeCartItem = async ({userId, inventoryId}) => {
-    try {
-        await client.query(`
-            DELETE FROM carts
-            WHERE carts."userId"=$1 AND carts."inventoryId"=$2;
-        `, [userId, inventoryId]);
+  try {
+      await client.query(`
+          DELETE FROM carts
+          WHERE carts."userId"=$1 AND carts."inventoryId"=$2;
+      `, [userId, inventoryId]);
 
-        const updatedCart = await getCartItemsByUserId(userId);
+      const updatedCart = await getCartItemsByUserId(userId);
 
-        return updatedCart;
-      } catch (error) {
-        throw error;
-      }
+      return updatedCart;
+    } catch (error) {
+      throw error;
+    }
+}
+
+const removeAllCartItemsByUserId = async (userId) => {
+  try {
+    const removedCartItems = await getCartItemsByUserId(userId)
+
+    await client.query(`
+        DELETE FROM carts
+        WHERE carts."userId"=$1;
+    `, [userId]);
+
+    return removedCartItems;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export { 
     createCartItem,
     getCartItemsByUserId,
     updateCartItemCount,
-    removeCartItem
+    removeCartItem,
+    removeAllCartItemsByUserId
  }

@@ -4,7 +4,9 @@ import {
     createCartItem,
     getCartItemsByUserId,
     updateCartItemCount,
-    removeCartItem } from "../db/carts.js";
+    removeCartItem,
+    removeAllCartItemsByUserId
+ } from "../db/carts.js";
 
 // GET /api/cart
 router.get('/', async (req, res, next) => {
@@ -82,6 +84,26 @@ router.delete('/', async (req, res, next) => {
                 message: 'You must be logged in to perform this action!'
             })
         }
+    }
+    catch({error, message}) {
+        next({error, message});
+    }
+});
+
+// DELETE /api/cart/all
+router.delete('/all', async (req, res, next) => {
+    const user = req.user;
+
+    if (!user) {
+        next({
+            error: 'Unauthorized Error',
+            message: 'You must be logged in to perform this action!'
+        })
+    }
+
+    try {
+        const deletedCart = await removeAllCartItemsByUserId(user.id);
+        res.send(deletedCart);
     }
     catch({error, message}) {
         next({error, message});

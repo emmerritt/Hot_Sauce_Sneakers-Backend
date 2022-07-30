@@ -17,24 +17,18 @@ const createOrderHistoryItem = async ({ userId, inventoryId, count }) => {
   }
 };
 
-const getUserOrderHistory = async ({ username }) => {
+const getUserOrderHistory = async ({ userId }) => {
   try {
-    // const { rows: response } = await client.query(
-    //   `
-    //     SELECT * FROM
-    //     order_histories;
-    //   `
-    // );
     const sql = `
-        SELECT * FROM
-        order_histories INNER JOIN orders
-        ON( "order_histories"."orderId" = orders.id )
-                                INNER JOIN users
-        ON( "orders"."userId" = users.id )
-        WHERE users.username = $1;
+        SELECT order_histories.id, order_histories."orderId", order_histories."inventoryId", order_histories.count, users.id AS "userId", users.email 
+        FROM order_histories 
+        INNER JOIN orders
+        ON ("order_histories"."orderId" = orders.id )
+        INNER JOIN users
+        ON ("orders"."userId" = users.id)
+        WHERE users.id = $1;
       `;
-    console.log(sql);
-    const { rows: response } = await client.query(sql, [username]);
+    const { rows: response } = await client.query(sql, [userId]);
 
     return response;
   } catch (error) {

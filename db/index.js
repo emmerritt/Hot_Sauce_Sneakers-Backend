@@ -48,11 +48,15 @@ export {
     getAllProductsInStockByBrand
 } from './products.js';
 
-export { createOrderHistoryItem } from './order_histories.js';
+export { 
+    createOrderHistoryItem,
+    getUserOrderHistory 
+} from './order_histories.js';
 
 export { 
     createCartItem,
     getCartItemsByUserId,
     updateCartItemCount,
-    removeCartItem 
+    removeCartItem,
+    removeAllCartItemsByUserId 
 } from './carts.js';

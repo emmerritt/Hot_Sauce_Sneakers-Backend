@@ -8,7 +8,7 @@ import {
   getUserByEmail,
   createUser,
   verifyPassword,
-  getUserByUsername,
+  getUserById
 } from "../db/users.js";
 import { getUserOrderHistory } from "../db/order_histories.js";
 import { getCartItemsByUserId } from "../db/carts.js";
@@ -71,29 +71,28 @@ router.post("/login", async (req, res, next) => {
       token: token,
       user: user,
     });
-  } catch ({ error, name, message }) {
-    next({ error, name, message });
+  } catch ({ error, message }) {
+    next({ error, message });
   }
 });
 
-router.get("/:username/orderhistory", async (req, res, next) => {
+// Get user's orer history
+router.get("/:userId/orderhistory", async (req, res, next) => {
+  const { userId } = req.params;
   try {
-    console.log("username: ", req.params.username);
-    // const history = [];
-    const history = await getUserOrderHistory(req.params.username);
+    const history = await getUserOrderHistory({userId});
     res.send({ message: "Orders fetched successful!", data: history });
   } catch ({ error, message }) {
     next({ error, message });
   }
 });
 
-router.get("/:username/cart", async (req, res, next) => {
+// Get user's current cart
+router.get("/:userId/cart", async (req, res, next) => {
+  const { userId } = req.params;
   try {
-    console.log("username: ", req.params.username);
-    const userDetails = await getUserByUsername(req.params.username);
-    // const history = [];
-    const cartItems = await getCartItemsByUserId(userDetails.id);
-    res.send({ message: "Cart items fetched successful!", data: cartItems });
+    const cartItems = await getCartItemsByUserId(userId);
+    res.send({ message: "Cart items fetched successful!", data: cartItems });p
   } catch (error) {
     console.log(error);
     next({ error: error.error, name: error.name, message: error.message });
