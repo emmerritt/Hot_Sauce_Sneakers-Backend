@@ -43,6 +43,24 @@ const getUserByEmail = async ({ email }) => {
   }
 };
 
+const getUserByUsername = async ({ username }) => {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+          SELECT * FROM users
+          WHERE username=$1;
+        `,
+      [username]
+    );
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getUserById = async ({ id }) => {
   try {
     const {
@@ -55,7 +73,7 @@ const getUserById = async ({ id }) => {
       [id]
     );
 
-    delete user.password
+    delete user.password;
 
     return user;
   } catch (error) {
@@ -127,14 +145,15 @@ const getAllUsers = async () => {
   } catch (error) {
     throw error;
   }
-}
+};
 
 export {
   createUser,
   getUserByEmail,
+  getUserByUsername,
   upgradeUserToAdmin,
   deactivateUser,
   verifyPassword,
   getUserById,
-  getAllUsers
+  getAllUsers,
 };
