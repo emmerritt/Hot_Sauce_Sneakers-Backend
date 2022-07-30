@@ -17,7 +17,7 @@ const createCartItem = async ({userId, inventoryId, count}) => {
 const getCartItemsByUserId = async (userId) => {
     try {
         const { rows: items } = await client.query(`
-          SELECT carts.count, inventories.id AS "inventoryId", products.id AS "productId", products.name, products.price, products.image, brands.name AS "brand", sizes.gender, sizes.size  FROM carts
+          SELECT carts.count, inventories.id AS "inventoryId", products.id AS "productId", products.name, products.price, products.image, brands.name AS "brand", sizes.gender, sizes.size, sizes.id AS "sizeId"  FROM carts
           JOIN inventories
           ON carts."inventoryId"=inventories.id
           JOIN products
