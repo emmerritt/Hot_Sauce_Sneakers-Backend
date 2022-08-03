@@ -11,9 +11,10 @@ import { inventoryRouter } from "./inventory.js";
 import { adminRouter } from './admin.js';
 import { brandsRouter } from './brands.js';
 import { sizesRouter } from "./sizes.js";
-import { getUserById } from '../db/index.js';
+import { ordersRouter } from "./orders.js";
 import cartRouter from './cart.js'
 
+import { getUserById } from '../db/index.js';
 
 
 // Authorize and attach current user to request
@@ -60,6 +61,8 @@ router.use('/sizes', sizesRouter)
 router.use('/admin', adminRouter)
 // /api/cart
 router.use('/cart', cartRouter);
+// /api/orders
+router.use('/orders', ordersRouter)
 
 
 // Server health check
