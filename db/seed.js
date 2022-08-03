@@ -30,10 +30,21 @@ import {
     verifyPassword,
     getCartItemsByUserId,
     updateCartItemCount,
-    removeCartItem 
+    removeCartItem,
+    getOrderByOrderId,
+    getOrdersByUserId 
  } from './index.js'
 
- import { testBrands, testProducts, testSizes, testInventory, testAdmins, testUsers } from './test_data.js'
+ import { 
+  testBrands, 
+  testProducts, 
+  testSizes, 
+  testInventory, 
+  testAdmins, 
+  testUsers,
+  testOrders,
+  testOrderHistory 
+} from './test_data.js'
 
 const dropTables = async () => {
     try {
@@ -96,13 +107,15 @@ const createTables = async () => {
           );
           CREATE TABLE orders (
             id SERIAL PRIMARY KEY,
-            "userId" INTEGER REFERENCES users(id)
+            "userId" INTEGER REFERENCES users(id),
+            status VARCHAR(255) DEFAULT 'New'
           );
           CREATE TABLE order_histories (
             id SERIAL PRIMARY KEY,
             count INTEGER,
             "orderId" INTEGER REFERENCES orders(id),
             "inventoryId" INTEGER REFERENCES inventories(id),
+            "purchasePrice" MONEY,
             UNIQUE("orderId", "inventoryId")
           );
           CREATE TABLE carts (
@@ -150,6 +163,8 @@ const testDB = async () => {
     const seededProducts = await Promise.all(testProducts.map(createProduct))
     const seededSizes = await Promise.all(testSizes.map(createSize))
     const seededInventory = await Promise.all(testInventory.map(createInventoryItem))
+    const seedOrders = await Promise.all(testOrders.map(createOrder))
+    const seedOrderItems = await Promise.all(testOrderHistory.map(createOrderHistoryItem))
     const seededCart = await createCartItem({userId: 1, inventoryId: 5, count: 3})
     const seededCart2 = await createCartItem({userId: 1, inventoryId: 6, count: 1})
 }
