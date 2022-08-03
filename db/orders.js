@@ -54,7 +54,7 @@ const getOrdersByUserId = async (userId) => {
 
 const updateOrderStatus = async ({orderId, status}) => {
   try {
-    const { rows: {order} } = await client.query(`
+    const { rows: [order] } = await client.query(`
       UPDATE orders
       SET status=$1
       WHERE id=$2
