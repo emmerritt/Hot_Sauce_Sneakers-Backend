@@ -8,10 +8,11 @@ import {
   getUserByEmail,
   createUser,
   verifyPassword,
-  getUserById
+  getUserById,
 } from "../db/users.js";
 import { getUserOrderHistory } from "../db/order_histories.js";
 import { getCartItemsByUserId } from "../db/carts.js";
+import { getOrdersByUserId } from "../db/index.js";
 
 // Register new user
 router.post("/register", async (req, res, next) => {
@@ -76,11 +77,11 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-// Get user's orer history
+// Get user's order history
 router.get("/:userId/orderhistory", async (req, res, next) => {
   const { userId } = req.params;
   try {
-    const history = await getUserOrderHistory({userId});
+    const history = await getOrdersByUserId(userId);
     res.send({ message: "Orders fetched successful!", data: history });
   } catch ({ error, message }) {
     next({ error, message });

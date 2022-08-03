@@ -1,17 +1,17 @@
 import { client } from "./index.js";
 
-const createOrderHistoryItem = async ({ userId, inventoryId, count }) => {
+const createOrderHistoryItem = async ({ orderId, inventoryId, count, price }) => {
   try {
-    const { rows: response } = await client.query(
+    const { rows: [orderItem] } = await client.query(
       `
-        INSERT INTO order_histories("orderId", "inventoryId", count)
-        VALUES ($1, $2, $3)
+        INSERT INTO order_histories("orderId", "inventoryId", count, "purchasePrice")
+        VALUES ($1, $2, $3, $4)
         ON CONFLICT ("orderId", "inventoryId") DO NOTHING
         RETURNING *;
       `,
-      [userId, inventoryId, count]
+      [orderId, inventoryId, count, price]
     );
-    return response[0];
+    return orderItem;
   } catch (error) {
     throw error;
   }
@@ -36,4 +36,23 @@ const getUserOrderHistory = async ({ userId }) => {
   }
 };
 
-export { createOrderHistoryItem, getUserOrderHistory };
+const getOrderItemsByOrderId = async (orderId) => {
+  try {
+    const sql = `
+        SELECT order_histories.id, order_histories."orderId", order_histories."inventoryId", order_histories.count, order_histories."purchasePrice", products.name, products.image, sizes.gender, sizes.size, brands.name AS "brand"
+        FROM order_histories 
+        JOIN inventories ON order_histories."inventoryId"=inventories.id
+        JOIN sizes ON inventories."sizeId"=sizes.id
+        JOIN products ON inventories."productId"=products.id
+        JOIN brands ON products."brandId"=brands.id
+        WHERE order_histories."orderId"=$1;
+      `;
+    const { rows: response } = await client.query(sql, [orderId]);
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export { createOrderHistoryItem, getUserOrderHistory, getOrderItemsByOrderId };
