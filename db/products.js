@@ -68,6 +68,25 @@ const getAllProductsInStockBySize = async (sizeId) => {
       }
 }
 
+const getAllProductsInStockByGender = async (gender) => {
+  try {
+      const { rows: products } = await client.query(`
+        SELECT products.*, brands.name AS "brand", sizes.gender FROM products
+        JOIN brands
+        ON brands.id=products."brandId"
+        LEFT OUTER JOIN inventories 
+        ON products.id=inventories."productId"
+        JOIN sizes
+        ON inventories."sizeId"=sizes.id
+        WHERE inventories.stock>0 AND sizes.gender=$1
+        GROUP BY products.id, brands.id, sizes.gender;
+      `, [gender]);
+      return products;
+    } catch (error) {
+      throw error;
+    }
+}
+
 const getAllProductsInStockByBrand = async (brandId) => {
     try {
         const { rows: products } = await client.query(`
@@ -157,5 +176,6 @@ export {
     updateProduct,
     deleteProduct,
     getAllProductsInStockBySize,
-    getAllProductsInStockByBrand
+    getAllProductsInStockByBrand,
+    getAllProductsInStockByGender
  }
