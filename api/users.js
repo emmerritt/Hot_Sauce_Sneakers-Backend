@@ -19,6 +19,7 @@ router.post("/register", async (req, res, next) => {
   try {
     if (await getUserByEmail({ email: req.body.email })) {
       res.status(400).json({ message: "Email address already in use." });
+      return;
     }
 
     const user = await createUser({
