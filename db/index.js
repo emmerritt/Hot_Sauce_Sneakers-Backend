@@ -28,7 +28,12 @@ export {
     deleteInventoryItemById
 } from './inventories.js';
 
-export { createOrder } from './orders.js';
+export { 
+    createOrder,
+    getOrderByOrderId,
+    getOrdersByUserId,
+    updateOrderStatus 
+} from './orders.js';
 
 export { 
     createSize,
@@ -50,7 +55,8 @@ export {
 
 export { 
     createOrderHistoryItem,
-    getUserOrderHistory 
+    getUserOrderHistory,
+    getOrderItemsByOrderId 
 } from './order_histories.js';
 
 export { 

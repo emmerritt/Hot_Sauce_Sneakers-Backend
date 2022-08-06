@@ -353,11 +353,82 @@ const testAdmins = [
     }
 ]
 
+const testOrders = [
+    {
+        userId: 1
+    },
+    {
+        userId: 1
+    },
+    {
+        userId: 2
+    },
+    {
+        userId: 3
+    },
+    {
+        userId: 6
+    },
+    {
+        userId: 7
+    },
+    {
+        userId: 7
+    }
+]
+
+const testOrderHistory = [
+    {
+        orderId: 1,
+        inventoryId: 5,
+        count: 1,
+        price: 265.00
+    },
+    {
+        orderId: 1,
+        inventoryId: 6,
+        count: 1,
+        price: 265.00
+    },
+    {
+        orderId: 1,
+        inventoryId: 9,
+        count: 2,
+        price: 250.00
+    },
+    {
+        orderId: 2,
+        inventoryId: 5,
+        count: 1,
+        price: 265.00
+    },
+    {
+        orderId: 3,
+        inventoryId: 1,
+        count: 1,
+        price: 190.00
+    },
+    {
+        orderId: 4,
+        inventoryId: 1,
+        count: 3,
+        price: 190.00
+    },
+    {
+        orderId: 5,
+        inventoryId: 3,
+        count: 1,
+        price: 190.00
+    }
+]
+
 export {
     testProducts,
     testBrands,
     testSizes,
     testInventory,
     testUsers,
-    testAdmins
+    testAdmins,
+    testOrders,
+    testOrderHistory
 }
