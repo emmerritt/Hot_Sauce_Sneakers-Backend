@@ -14,6 +14,8 @@ import {
 
 // get all products
 productRouter.get('/admin', async(req, res, next) => {
+    const user = req.user;
+
     if (!user || !user.isAdmin) {
         next({
             error: 'Admin Permissions Required',
