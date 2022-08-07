@@ -50,7 +50,8 @@ export {
     updateProduct,
     deleteProduct,
     getAllProductsInStockBySize,
-    getAllProductsInStockByBrand
+    getAllProductsInStockByBrand,
+    getAllProductsInStockByGender
 } from './products.js';
 
 export { 

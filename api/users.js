@@ -57,6 +57,14 @@ router.post("/login", async (req, res, next) => {
       });
     }
 
+    if (!user.isActive) {
+      next({
+        error: "User Has Been Deactivated",
+        message:
+          "This user account has been deleted. Contact a site administrator for more info.",
+      });
+    }
+
     const token = jwt.sign(
       {
         id: user.id,

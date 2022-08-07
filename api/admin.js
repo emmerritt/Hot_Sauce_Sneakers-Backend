@@ -19,17 +19,17 @@ adminRouter.get('/users', async (req, res, next) => {
     }
 
     try {
-        const allUsers = await getAllUsers()
+        const allUsers = await getAllUsers();
 
-        res.send(allUsers)
+        res.send(allUsers);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
 })
 
 // Get details of specific user
 adminRouter.get('/users/:userId', async (req, res, next) => {
-    const { userId } = req.params
+    const { userId } = req.params;
     const user = req.user;
     
     if (!user || !user.isAdmin) {
@@ -40,17 +40,17 @@ adminRouter.get('/users/:userId', async (req, res, next) => {
     }
 
     try {
-        const userDetails = await getUserById({id: userId})
+        const userDetails = await getUserById({id: userId});
 
-        res.send(userDetails)
+        res.send(userDetails);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
 })
 
 // Upgrade user to Admin
 adminRouter.patch('/users/upgrade/:userId', async (req, res, next) => {
-    const { userId } = req.params
+    const { userId } = req.params;
     const user = req.user;
     
     if (!user || !user.isAdmin) {
@@ -61,18 +61,18 @@ adminRouter.patch('/users/upgrade/:userId', async (req, res, next) => {
     }
 
     try {
-        const userDetails = await getUserById({id: userId})
-        const upgradedUser = await upgradeUserToAdmin(userDetails)
+        const userDetails = await getUserById({id: userId});
+        const upgradedUser = await upgradeUserToAdmin(userDetails);
 
-        res.send(upgradedUser)
+        res.send(upgradedUser);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
 })
 
 // Deactivate user
 adminRouter.patch('/users/deactivate/:userId', async (req, res, next) => {
-    const { userId } = req.params
+    const { userId } = req.params;
     const user = req.user;
     
     if (!user || !user.isAdmin) {
@@ -83,13 +83,13 @@ adminRouter.patch('/users/deactivate/:userId', async (req, res, next) => {
     }
 
     try {
-        const userDetails = await getUserById({id: userId})
-        const deactivatedUser = await deactivateUser(userDetails)
+        const userDetails = await getUserById({id: userId});
+        const deactivatedUser = await deactivateUser(userDetails);
 
-        res.send(deactivatedUser)
+        res.send(deactivatedUser);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
 })
 
-export { adminRouter }
+export { adminRouter };
