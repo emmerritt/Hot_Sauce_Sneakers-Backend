@@ -1,10 +1,9 @@
-import { client } from "./index.js";
-import bcrypt from "bcrypt";
+import { client } from './index.js';
+import bcrypt from 'bcrypt';
 
 const createUser = async ({ username, password, email }) => {
   const SALT_COUNT = 10;
   const pwHash = bcrypt.hashSync(password, SALT_COUNT);
-  // const emailHash = bcrypt.hashSync(email, SALT_COUNT);
 
   try {
     const { rows: response } = await client.query(
@@ -90,7 +89,7 @@ async function verifyPassword({ email, password }) {
     delete user.password;
     return user;
   }
-}
+};
 
 const upgradeUserToAdmin = async ({ email }) => {
   try {

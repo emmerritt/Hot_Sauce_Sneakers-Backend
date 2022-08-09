@@ -1,23 +1,23 @@
-import express from "express";
+import express from 'express';
 const sizesRouter = express.Router();
 import { 
     getAllSizes,
     createSize,
     deleteSize,
     getAllSizesInStockByProductId
-} from '../db/index.js'
+} from '../db/index.js';
 
 // Get all sizes
 sizesRouter.get('/', async (req, res, next) => {
 
     try {
-        const allSizes = await getAllSizes()
+        const allSizes = await getAllSizes();
 
-        res.send(allSizes)
+        res.send(allSizes);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
-})
+});
 
 // Get all sizes of a product
 sizesRouter.get('/:productId', async (req, res, next) => {
@@ -28,14 +28,14 @@ sizesRouter.get('/:productId', async (req, res, next) => {
 
         res.send(allSizesOfProduct);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
 })
 
 // Create a new size
 sizesRouter.post('/', async (req, res, next) => {
-    const { size, gender } = req.body
-    const user = req.user
+    const { size, gender } = req.body;
+    const user = req.user;
     
     if (!user || !user.isAdmin) {
         next({
@@ -45,18 +45,18 @@ sizesRouter.post('/', async (req, res, next) => {
     }
 
     try {
-        const newSize = await createSize({size, gender})
+        const newSize = await createSize({size, gender});
 
-        res.send(newSize)
+        res.send(newSize);
     } catch ({error, message}) {
         next ({error, message})
     }
-})
+});
 
 // Delete a size by sizeId
 sizesRouter.delete('/:id', async (req, res, next) => {
-    const { id } = req.params
-    const user = req.user
+    const { id } = req.params;
+    const user = req.user;
     
     if (!user || !user.isAdmin) {
         next({
@@ -66,11 +66,11 @@ sizesRouter.delete('/:id', async (req, res, next) => {
     }
 
     try {
-        const deletedSize = await deleteSize(id)
+        const deletedSize = await deleteSize(id);
 
-        res.send(deletedSize)
+        res.send(deletedSize);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
 })
 

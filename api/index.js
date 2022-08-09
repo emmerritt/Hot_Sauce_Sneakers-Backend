@@ -1,18 +1,18 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
-import express from "express";
+import express from 'express';
 import jwt from 'jsonwebtoken';
 const { JWT_SECRET } = process.env;
 const router = express.Router();
 
-import usersRoutes from "./users.js";
-import { productRouter } from './products.js'
-import { inventoryRouter } from "./inventory.js";
+import usersRoutes from './users.js';
+import { productRouter } from './products.js';
+import { inventoryRouter } from './inventory.js';
 import { adminRouter } from './admin.js';
 import { brandsRouter } from './brands.js';
-import { sizesRouter } from "./sizes.js";
-import { ordersRouter } from "./orders.js";
-import cartRouter from './cart.js'
+import { sizesRouter } from './sizes.js';
+import { ordersRouter } from './orders.js';
+import cartRouter from './cart.js';
 
 import { getUserById } from '../db/index.js';
 
@@ -54,15 +54,15 @@ router.use('/products', productRouter);
 // /api/inventory
 router.use('/inventory', inventoryRouter);
 // /api/brands
-router.use('/brands', brandsRouter)
+router.use('/brands', brandsRouter);
 // /api/sizes
-router.use('/sizes', sizesRouter)
+router.use('/sizes', sizesRouter);
 // /api/admin
-router.use('/admin', adminRouter)
+router.use('/admin', adminRouter);
 // /api/cart
 router.use('/cart', cartRouter);
 // /api/orders
-router.use('/orders', ordersRouter)
+router.use('/orders', ordersRouter);
 
 
 // Server health check
@@ -77,7 +77,7 @@ router.get('/health', async (req, res, next) => {
 router.use((req, res, next) => {
     res.status(404);
     res.send({message: `This page does not exist.`});
-})
+});
 
 // Error handling
 router.use((error, req, res, next) => {

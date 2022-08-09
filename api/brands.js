@@ -1,22 +1,22 @@
-import express from "express";
+import express from 'express';
 const brandsRouter = express.Router();
 import { 
     getAllBrands,
     createBrand,
     deleteBrand
-} from '../db/index.js'
+} from '../db/index.js';
 
 // Get all brands
 brandsRouter.get('/', async (req, res, next) => {
 
     try {
-        const allBrands = await getAllBrands()
+        const allBrands = await getAllBrands();
 
-        res.send(allBrands)
+        res.send(allBrands);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
-})
+});
 
 // Create a new brand
 brandsRouter.post('/', async (req, res, next) => {
@@ -31,18 +31,18 @@ brandsRouter.post('/', async (req, res, next) => {
     }
 
     try {
-        const newBrand = await createBrand({name})
+        const newBrand = await createBrand({name});
 
-        res.send(newBrand)
+        res.send(newBrand);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
-})
+});
 
 // Delete a brand by brandId
 brandsRouter.delete('/:id', async (req, res, next) => {
-    const { id } = req.params
-    const user = req.user
+    const { id } = req.params;
+    const user = req.user;
     
     if (!user || !user.isAdmin) {
         next({
@@ -52,12 +52,12 @@ brandsRouter.delete('/:id', async (req, res, next) => {
     }
 
     try {
-        const deletedBrand = await deleteBrand(id)
+        const deletedBrand = await deleteBrand(id);
 
-        res.send(deletedBrand)
+        res.send(deletedBrand);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
-})
+});
 
 export { brandsRouter }

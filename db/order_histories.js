@@ -53,6 +53,10 @@ const getOrderItemsByOrderId = async (orderId) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
-export { createOrderHistoryItem, getUserOrderHistory, getOrderItemsByOrderId };
+export { 
+  createOrderHistoryItem, 
+  getUserOrderHistory, 
+  getOrderItemsByOrderId 
+};
