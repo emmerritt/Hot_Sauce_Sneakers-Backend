@@ -58,7 +58,7 @@ productRouter.get('/category/men', async (req, res, next) => {
   }
 });
 
-// get all Men's products in stock
+// get all Women's products in stock
 productRouter.get('/category/women', async (req, res, next) => {
   const gender = `Women's`;
 
