@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 const router = express.Router();
 import { 
     createCartItem,
@@ -6,7 +6,7 @@ import {
     updateCartItemCount,
     removeCartItem,
     removeAllCartItemsByUserId
- } from "../db/carts.js";
+ } from '../db/carts.js';
 
 // GET /api/cart
 router.get('/', async (req, res, next) => {
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
             next({
                 error: 'Unauthorized Error',
                 message: 'You must be logged in to perform this action!'
-            })
+            });
         }
     }
     catch({error, message}) {
@@ -40,7 +40,7 @@ router.post('/', async (req, res, next) => {
             next({
                 error: 'Unauthorized Error',
                 message: 'You must be logged in to perform this action!'
-            })
+            });
         }
     }
     catch({error, message}) {
@@ -61,7 +61,7 @@ router.patch('/', async (req, res, next) => {
             next({
                 error: 'Unauthorized Error',
                 message: 'You must be logged in to perform this action!'
-            })
+            });
         }
     }
     catch({error, message}) {
@@ -82,7 +82,7 @@ router.delete('/', async (req, res, next) => {
             next({
                 error: 'Unauthorized Error',
                 message: 'You must be logged in to perform this action!'
-            })
+            });
         }
     }
     catch({error, message}) {
@@ -98,7 +98,7 @@ router.delete('/all', async (req, res, next) => {
         next({
             error: 'Unauthorized Error',
             message: 'You must be logged in to perform this action!'
-        })
+        });
     }
 
     try {

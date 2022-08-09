@@ -14,7 +14,7 @@ const createOrder = async ({userId}) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
 const getOrderByOrderId = async (orderId) => {
   try {
@@ -24,15 +24,15 @@ const getOrderByOrderId = async (orderId) => {
       WHERE id=$1;
     `, [orderId]);
 
-    const orderItems = await getOrderItemsByOrderId(orderId)
+    const orderItems = await getOrderItemsByOrderId(orderId);
 
-    order.items = orderItems
+    order.items = orderItems;
 
     return order;
   } catch (error) {
     throw error;
   }
-}
+};
 
 const getOrdersByUserId = async (userId) => {
   try {
@@ -50,7 +50,7 @@ const getOrdersByUserId = async (userId) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
 const updateOrderStatus = async ({orderId, status}) => {
   try {
@@ -65,11 +65,11 @@ const updateOrderStatus = async ({orderId, status}) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
 export { 
     createOrder,
     getOrderByOrderId,
     getOrdersByUserId,
     updateOrderStatus
-}
+};

@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 const productRouter = express.Router();
 import {
   createProduct,
@@ -10,15 +10,15 @@ import {
   getAllProductsInStockBySize,
   getAllProductsInStockByBrand,
   getAllProductsInStockByGender,
-} from "../db/index.js";
+} from '../db/index.js';
 
 // get all products
-productRouter.get("/admin", async (req, res, next) => {
+productRouter.get('/admin', async (req, res, next) => {
   const user = req.user;
 
   if (!user || !user.isAdmin) {
     next({
-      error: "Admin Permissions Required",
+      error: 'Admin Permissions Required',
       message: `You must be logged in as an admin user to perform this action.`,
     });
   }
@@ -33,7 +33,7 @@ productRouter.get("/admin", async (req, res, next) => {
 });
 
 // get all products in stock by brand
-productRouter.get("/brands/:brandId", async (req, res, next) => {
+productRouter.get('/brands/:brandId', async (req, res, next) => {
   const { brandId } = req.params;
 
   try {
@@ -46,8 +46,8 @@ productRouter.get("/brands/:brandId", async (req, res, next) => {
 });
 
 // get all Men's products in stock
-productRouter.get("/category/men", async (req, res, next) => {
-  const gender = "Men's";
+productRouter.get('/category/men', async (req, res, next) => {
+  const gender = `Men's`;
 
   try {
     const products = await getAllProductsInStockByGender(gender);
@@ -58,9 +58,9 @@ productRouter.get("/category/men", async (req, res, next) => {
   }
 });
 
-// get all Men's products in stock
-productRouter.get("/category/women", async (req, res, next) => {
-  const gender = "Women's";
+// get all Women's products in stock
+productRouter.get('/category/women', async (req, res, next) => {
+  const gender = `Women's`;
 
   try {
     const products = await getAllProductsInStockByGender(gender);
@@ -72,7 +72,7 @@ productRouter.get("/category/women", async (req, res, next) => {
 });
 
 // get all products in stock of a specific size, by sizeId (ie women's 9, men's 7.5, etc.)
-productRouter.get("/size/:sizeId", async (req, res, next) => {
+productRouter.get('/size/:sizeId', async (req, res, next) => {
   const { sizeId } = req.params;
 
   try {
@@ -85,7 +85,7 @@ productRouter.get("/size/:sizeId", async (req, res, next) => {
 });
 
 // get product by id
-productRouter.get("/:productId", async (req, res, next) => {
+productRouter.get('/:productId', async (req, res, next) => {
   const { productId } = req.params;
 
   try {
@@ -98,7 +98,7 @@ productRouter.get("/:productId", async (req, res, next) => {
 });
 
 // update product
-productRouter.patch("/:productId", async (req, res, next) => {
+productRouter.patch('/:productId', async (req, res, next) => {
   const { productId } = req.params;
   const { name, price, image, brandId } = req.body;
   try {
@@ -116,7 +116,7 @@ productRouter.patch("/:productId", async (req, res, next) => {
 });
 
 // delete product
-productRouter.delete("/:productId", async (req, res, next) => {
+productRouter.delete('/:productId', async (req, res, next) => {
   try {
     const { productId } = req.params;
     const productToDelete = await deleteProduct(productId);
@@ -127,7 +127,7 @@ productRouter.delete("/:productId", async (req, res, next) => {
 });
 
 // get all products in stock
-productRouter.get("/", async (req, res, next) => {
+productRouter.get('/', async (req, res, next) => {
   try {
     const productsInStock = await getAllProductsInStock();
     console.log(productsInStock);
@@ -138,7 +138,7 @@ productRouter.get("/", async (req, res, next) => {
 });
 
 // create new product
-productRouter.post("/", async (req, res, next) => {
+productRouter.post('/', async (req, res, next) => {
   const { name, brandId, price, image } = req.body;
   const productData = {
     name,

@@ -1,35 +1,35 @@
-import express from "express";
+import express from 'express';
 const ordersRouter = express.Router();
 import {
     createOrder,
     createOrderHistoryItem,
     getOrderByOrderId,
     updateOrderStatus
-} from '../db/index.js'
+} from '../db/index.js';
 
 // POST - Create new order, for user with userId
 ordersRouter.post('/', async (req, res, next) => {
     const { id } = req.user;
 
     try {
-        const newOrder = await createOrder({userId: id})
+        const newOrder = await createOrder({userId: id});
 
-        res.send(newOrder)
+        res.send(newOrder);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
 })
 
 // GET - Get order details for an order by orderId
 ordersRouter.get('/:orderId', async (req, res, next) => {
-    const { orderId } = req.params
+    const { orderId } = req.params;
 
     try {
-        const orderDetails = await getOrderByOrderId(orderId)
+        const orderDetails = await getOrderByOrderId(orderId);
 
-        res.send(orderDetails)
+        res.send(orderDetails);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }    
 })
 
@@ -48,13 +48,13 @@ ordersRouter.patch('/:orderId', async (req, res, next) => {
     }
 
     try {
-        const updatedOrder = await updateOrderStatus({orderId, status})
+        const updatedOrder = await updateOrderStatus({orderId, status});
 
-        res.send(updatedOrder)
+        res.send(updatedOrder);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }  
-})
+});
 
 // POST - Add item to user's order 
 // Authentication - Must be signed in as that user to update their order
@@ -64,7 +64,7 @@ ordersRouter.post('/:orderId', async (req, res, next) => {
     const user = req.user;
 
     try {
-        const orderDetails = await getOrderByOrderId(orderId)
+        const orderDetails = await getOrderByOrderId(orderId);
 
         if (!user || user.id !== orderDetails.userId) {
             next({
@@ -73,12 +73,12 @@ ordersRouter.post('/:orderId', async (req, res, next) => {
             });
         }
 
-        const newOrderItem = await createOrderHistoryItem({orderId, inventoryId, count, price})
+        const newOrderItem = await createOrderHistoryItem({orderId, inventoryId, count, price});
 
-        res.send(newOrderItem)
+        res.send(newOrderItem);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }  
 })
 
-export { ordersRouter }
+export { ordersRouter };

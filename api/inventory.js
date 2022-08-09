@@ -1,21 +1,21 @@
-import express from "express";
+import express from 'express';
 const inventoryRouter = express.Router();
 import { 
     getStockByProductIdAndSize,
     createInventoryItem, 
     updateStockByProductIdAndSize 
-} from '../db/index.js'
+} from '../db/index.js';
 
 // Get current stock for inventory item
 inventoryRouter.get('/:productId/:sizeId', async (req, res, next) => {
     const { productId, sizeId } = req.params;
 
     try {
-        const inventoryItem = await getStockByProductIdAndSize({productId, sizeId})
+        const inventoryItem = await getStockByProductIdAndSize({productId, sizeId});
 
-        res.send(inventoryItem)
+        res.send(inventoryItem);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
 })
 
@@ -33,13 +33,13 @@ inventoryRouter.post('/', async (req, res, next) => {
     }
 
     try {
-        const newInventoryItem = await createInventoryItem({productId, sizeId, stock})
+        const newInventoryItem = await createInventoryItem({productId, sizeId, stock});
 
-        res.send(newInventoryItem)
+        res.send(newInventoryItem);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
-})
+});
 
 // Patch stock for inventory item
 // Body requires productId, sizeId, and count (from cart/order)
@@ -48,11 +48,11 @@ inventoryRouter.patch('/:productId', async (req, res, next) => {
     const { sizeId, count } = req.body;
 
     try {
-        const updatedInventoryItem = await updateStockByProductIdAndSize({productId, sizeId, count})
-        res.send(updatedInventoryItem)
+        const updatedInventoryItem = await updateStockByProductIdAndSize({productId, sizeId, count});
+        res.send(updatedInventoryItem);
     } catch ({error, message}) {
-        next ({error, message})
+        next ({error, message});
     }
-})
+});
 
-export { inventoryRouter }
+export { inventoryRouter };

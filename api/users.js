@@ -10,7 +10,6 @@ import {
   verifyPassword,
   getUserById,
 } from "../db/users.js";
-import { getUserOrderHistory } from "../db/order_histories.js";
 import { getCartItemsByUserId } from "../db/carts.js";
 import { getOrdersByUserId } from "../db/index.js";
 
@@ -102,7 +101,7 @@ router.get("/:userId/cart", async (req, res, next) => {
   const { userId } = req.params;
   try {
     const cartItems = await getCartItemsByUserId(userId);
-    res.send({ message: "Cart items fetched successful!", data: cartItems });p
+    res.send({ message: "Cart items fetched successful!", data: cartItems });
   } catch (error) {
     console.log(error);
     next({ error: error.error, name: error.name, message: error.message });
