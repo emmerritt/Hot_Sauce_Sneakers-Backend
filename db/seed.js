@@ -8,19 +8,19 @@ import {
     createCartItem,
     createOrder,
     createOrderHistoryItem,
-    getAllInventoryItemsInStock,
-    getAllProductsInStock,
-    getProductById,
-    getAllSizesInStockByProductId,
-    getAllSizesByProductId,
-    updateStockByProductIdAndSize,
-    getStockByProductIdAndSize,
-    getAllSizes,
-    getAllBrands,
-    getBrandByBrandId 
- } from './index.js'
+    upgradeUserToAdmin
+ } from './index.js';
 
- import { testBrands, testProducts, testSizes, testInventory } from './test_data.js'
+ import { 
+  testBrands, 
+  testProducts, 
+  testSizes, 
+  testInventory, 
+  testAdmins, 
+  testUsers,
+  testOrders,
+  testOrderHistory 
+} from './test_data.js';
 
 const dropTables = async () => {
     try {
@@ -83,13 +83,15 @@ const createTables = async () => {
           );
           CREATE TABLE orders (
             id SERIAL PRIMARY KEY,
-            "userId" INTEGER REFERENCES users(id)
+            "userId" INTEGER REFERENCES users(id),
+            status VARCHAR(255) DEFAULT 'New'
           );
           CREATE TABLE order_histories (
             id SERIAL PRIMARY KEY,
             count INTEGER,
             "orderId" INTEGER REFERENCES orders(id),
             "inventoryId" INTEGER REFERENCES inventories(id),
+            "purchasePrice" MONEY,
             UNIQUE("orderId", "inventoryId")
           );
           CREATE TABLE carts (
@@ -106,7 +108,7 @@ const createTables = async () => {
         console.error("Error building tables!");
         throw error;
     }
-}
+};
 
 const rebuildDB = async () => {
     try {
@@ -118,24 +120,29 @@ const rebuildDB = async () => {
     } catch (error) {
       throw error;
     }
-}
+};
 
 const testDB = async () => {
     const testUser = {
         username: 'testuser',
         password: 'testpassword',
         email: 'test@email.com'
-    }
+    };
+    const newUser = await createUser(testUser);
+    console.log("New user: ");
+    console.log(newUser);
 
-    const newUser = await createUser(testUser)
-    console.log("New user: ")
-    console.log(newUser)
-
-    const seededBrands = await Promise.all(testBrands.map(createBrand))
-    const seededProducts = await Promise.all(testProducts.map(createProduct))
-    const seededSizes = await Promise.all(testSizes.map(createSize))
-    const seededInventory = await Promise.all(testInventory.map(createInventoryItem))
-
+    const seededUsers = await Promise.all(testUsers.map(createUser));
+    const seededAdmins = await Promise.all(testAdmins.map(createUser));
+    const seededAdminsUpgraded = await Promise.all(seededAdmins.map(upgradeUserToAdmin));
+    const seededBrands = await Promise.all(testBrands.map(createBrand));
+    const seededProducts = await Promise.all(testProducts.map(createProduct));
+    const seededSizes = await Promise.all(testSizes.map(createSize));
+    const seededInventory = await Promise.all(testInventory.map(createInventoryItem));
+    const seedOrders = await Promise.all(testOrders.map(createOrder));
+    const seedOrderItems = await Promise.all(testOrderHistory.map(createOrderHistoryItem));
+    const seededCart = await createCartItem({userId: 1, inventoryId: 5, count: 3});
+    const seededCart2 = await createCartItem({userId: 1, inventoryId: 6, count: 1});
 }
 
 rebuildDB()
